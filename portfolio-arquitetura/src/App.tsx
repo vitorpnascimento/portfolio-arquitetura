@@ -1,7 +1,8 @@
-
 import React, { useEffect, useMemo, useState } from "react";
 
-// === DATA (edite aqui) ======================================================
+/* ========================
+   Dados do Portfólio
+======================== */
 const data = {
   name: "Nome Sobrenome",
   role: "Estudante de Arquitetura e Urbanismo",
@@ -55,11 +56,22 @@ const data = {
   awards: [] as { title: string; year: string }[],
 };
 
-
-// === UI HELPERS ==============================================================
-const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
+/* ========================
+   Helpers de UI
+======================== */
+const Section = ({
+  id,
+  title,
+  children,
+}: {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+}) => (
   <section id={id} className="scroll-mt-24">
-    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">{title}</h2>
+    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+      {title}
+    </h2>
     <div className="text-muted-foreground/90 leading-relaxed">{children}</div>
   </section>
 );
@@ -70,30 +82,41 @@ const Badge = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Card = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-2xl border bg-card text-card-foreground shadow-sm overflow-hidden">
-    {children}
-  </div>
-);
+/** Card usando a paleta definida no index.css (.card) */
+const Card = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <div className={`card shadow-sm ${className}`}>{children}</div>;
 
-const CardBody = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-  <div className={`p-5 md:p-6 ${className}`}>{children}</div>
-);
+const CardBody = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <div className={`p-5 md:p-6 ${className}`}>{children}</div>;
 
+/* ========================
+   Tema (claro/escuro)
+======================== */
 function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">(() =>
-    (typeof window !== "undefined" && (localStorage.getItem("theme") as any)) || "light"
+    (typeof window !== "undefined" &&
+      (localStorage.getItem("theme") as "light" | "dark")) || "light"
   );
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark", theme === "dark");
-      localStorage.setItem("theme", theme);
-    }
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
   }, [theme]);
   return { theme, setTheme } as const;
 }
 
-// === MAIN ====================================================================
+/* ========================
+   App
+======================== */
 export default function App() {
   const { theme, setTheme } = useTheme();
 
@@ -111,7 +134,7 @@ export default function App() {
   return (
     <div className="min-h-screen antialiased">
       {/* Top bar */}
-      <header className="sticky top-0 z-40 border-b backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <header className="sticky top-0 z-40 border-b backdrop-blur supports-[backdrop-filter]:bg-[color:var(--bg)]/70">
         <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="size-9 rounded-xl bg-gradient-to-br from-primary/80 to-primary/40" />
@@ -154,8 +177,12 @@ export default function App() {
           <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
             {data.name}
           </h1>
-          <p className="mt-2 text-lg md:text-xl text-muted-foreground">{data.role}</p>
-          <p className="mt-4 md:mt-6 leading-relaxed text-muted-foreground/90">{data.about}</p>
+          <p className="mt-2 text-lg md:text-xl text-muted-foreground">
+            {data.role}
+          </p>
+          <p className="mt-4 md:mt-6 leading-relaxed text-muted-foreground/90">
+            {data.about}
+          </p>
           <div className="mt-6 flex flex-wrap gap-2">
             <Badge>{data.location}</Badge>
             {data.links.portfolio && <Badge>Portfólio</Badge>}
@@ -168,23 +195,44 @@ export default function App() {
             <CardBody>
               <h3 className="font-medium">Contato</h3>
               <div className="mt-4 grid gap-2 text-sm">
-                <div className="flex items-center justify-between"><span className="text-muted-foreground">E-mail</span><a className="hover:underline" href={`mailto:${data.email}`}>{data.email}</a></div>
-                <div className="flex items-center justify-between"><span className="text-muted-foreground">Telefone</span><span>{data.phone}</span></div>
-                <div className="flex items-center justify-between"><span className="text-muted-foreground">LinkedIn</span><a className="hover:underline" href={data.links.linkedin} target="_blank">Abrir</a></div>
-                <div className="flex items-center justify-between"><span className="text-muted-foreground">Behance</span><a className="hover:underline" href={data.links.behance} target="_blank">Abrir</a></div>
-                <div className="flex items-center justify-between"><span className="text-muted-foreground">Portfólio</span><a className="hover:underline" href={data.links.portfolio} target="_blank">Abrir</a></div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">E-mail</span>
+                  <a className="hover:underline" href={`mailto:${data.email}`}>
+                    {data.email}
+                  </a>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Telefone</span>
+                  <span>{data.phone}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">LinkedIn</span>
+                  <a className="hover:underline" href={data.links.linkedin} target="_blank">
+                    Abrir
+                  </a>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Behance</span>
+                  <a className="hover:underline" href={data.links.behance} target="_blank">
+                    Abrir
+                  </a>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Portfólio</span>
+                  <a className="hover:underline" href={data.links.portfolio} target="_blank">
+                    Abrir
+                  </a>
+                </div>
               </div>
             </CardBody>
           </Card>
         </div>
       </section>
 
-      {/* Content sections */}
+      {/* Conteúdo */}
       <main className="max-w-6xl mx-auto px-4 md:px-6 pb-16 space-y-12 md:space-y-16">
         <Section id="sobre" title="Sobre">
-          <p>
-            {data.about}
-          </p>
+          <p>{data.about}</p>
         </Section>
 
         <Section id="formacao" title="Formação">
@@ -194,9 +242,13 @@ export default function App() {
                 <CardBody className="grid md:grid-cols-6 gap-2 md:gap-4">
                   <div className="md:col-span-4">
                     <div className="font-medium">{e.course}</div>
-                    <div className="text-sm text-muted-foreground">{e.institution}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {e.institution}
+                    </div>
                     {e.notes && (
-                      <p className="mt-2 text-sm text-muted-foreground/90">{e.notes}</p>
+                      <p className="mt-2 text-sm text-muted-foreground/90">
+                        {e.notes}
+                      </p>
                     )}
                   </div>
                   <div className="md:col-span-2 md:text-right text-sm text-muted-foreground">
@@ -212,7 +264,7 @@ export default function App() {
           <div className="grid md:grid-cols-3 gap-5">
             {data.projects.map((p, idx) => (
               <Card key={idx}>
-                <div className="aspect-video bg-gradient-to-br from-muted to-muted/60" />
+                <div className="aspect-video rounded-t-xl bg-[color:var(--card-border)]/20" />
                 <CardBody>
                   <h3 className="font-medium text-lg">{p.title}</h3>
                   <div className="mt-2 flex flex-wrap gap-1.5">
@@ -307,11 +359,15 @@ export default function App() {
               <CardBody>
                 <div className="font-medium">Prêmios & Menções</div>
                 {data.awards.length === 0 ? (
-                  <p className="mt-3 text-sm text-muted-foreground">Sem itens por enquanto.</p>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    Sem itens por enquanto.
+                  </p>
                 ) : (
                   <ul className="mt-3 list-disc ml-5 text-sm">
                     {data.awards.map((a, i) => (
-                      <li key={i}>{a.title} — {a.year}</li>
+                      <li key={i}>
+                        {a.title} — {a.year}
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -325,7 +381,9 @@ export default function App() {
             <CardBody className="grid md:grid-cols-2 gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">E-mail</div>
-                <a className="block hover:underline" href={`mailto:${data.email}`}>{data.email}</a>
+                <a className="block hover:underline" href={`mailto:${data.email}`}>
+                  {data.email}
+                </a>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Telefone</div>
@@ -333,26 +391,45 @@ export default function App() {
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">LinkedIn</div>
-                <a className="block hover:underline" href={data.links.linkedin} target="_blank">{data.links.linkedin}</a>
+                <a
+                  className="block hover:underline"
+                  href={data.links.linkedin}
+                  target="_blank"
+                >
+                  {data.links.linkedin}
+                </a>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Behance</div>
-                <a className="block hover:underline" href={data.links.behance} target="_blank">{data.links.behance}</a>
+                <a
+                  className="block hover:underline"
+                  href={data.links.behance}
+                  target="_blank"
+                >
+                  {data.links.behance}
+                </a>
               </div>
             </CardBody>
           </Card>
-          <p className="mt-3 text-sm text-muted-foreground">Dica: clique em <span className="px-1.5 py-0.5 border rounded">PDF</span> no topo para imprimir ou salvar em PDF.</p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Dica: clique em <span className="px-1.5 py-0.5 border rounded">PDF</span> no topo
+            para imprimir ou salvar em PDF.
+          </p>
         </Section>
       </main>
 
       <footer className="border-t">
         <div className="max-w-6xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between text-sm text-muted-foreground">
-          <span>© {new Date().getFullYear()} {data.name}. Todos os direitos reservados.</span>
-          <a href="#top" className="hover:underline">Voltar ao topo ↑</a>
+          <span>
+            © {new Date().getFullYear()} {data.name}. Todos os direitos reservados.
+          </span>
+          <a href="#top" className="hover:underline">
+            Voltar ao topo ↑
+          </a>
         </div>
       </footer>
 
-      {/* Print styles */}
+      {/* Estilos de impressão */}
       <style>{`
         @media print {
           header, footer, nav, button { display: none !important; }
