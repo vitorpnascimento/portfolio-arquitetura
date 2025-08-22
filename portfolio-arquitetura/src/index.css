@@ -1,23 +1,51 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========================
+   Variáveis de Tema
+======================== */
 :root {
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
-}
-html, body, #root { height: 100%; }
-* { box-sizing: border-box; }
-:root {
+
+  /* Tema claro */
   --bg: white;
   --fg: black;
+  --card-bg: #f8f9fa;      /* fundo claro dos cards */
+  --card-border: #e5e7eb;  /* borda clara */
 }
+
 .dark {
-  --bg: #0f172a; /* cinza escuro */
-  --fg: #f8fafc; /* quase branco */
+  /* Tema escuro estilo GitHub */
+  --bg: #0D1117;           /* fundo principal */
+  --fg: #C9D1D9;           /* texto */
+  --card-bg: #161B22;      /* fundo dos cards */
+  --card-border: #30363D;  /* borda escura */
 }
+
+/* ========================
+   Base
+======================== */
+html, body, #root {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--bg);
   color: var(--fg);
+}
+
+/* ========================
+   Cards
+======================== */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem; /* bordas arredondadas */
+  padding: 1rem;
 }
