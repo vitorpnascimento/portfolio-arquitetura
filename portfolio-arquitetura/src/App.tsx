@@ -52,10 +52,9 @@ const data = {
     },
   ],
   languages: ["Português (nativo)", "Inglês (intermediário)"],
-  awards: [
-    // { title: "Menção honrosa — Concurso X", year: "20XX" },
-  ],
+  awards: [] as { title: string; year: string }[],
 };
+
 
 // === UI HELPERS ==============================================================
 const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
