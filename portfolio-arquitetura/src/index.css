@@ -9,3 +9,15 @@
 }
 html, body, #root { height: 100%; }
 * { box-sizing: border-box; }
+:root {
+  --bg: white;
+  --fg: black;
+}
+.dark {
+  --bg: #0f172a; /* cinza escuro */
+  --fg: #f8fafc; /* quase branco */
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
