@@ -109,7 +109,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
+    <div className="min-h-screen antialiased">
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
