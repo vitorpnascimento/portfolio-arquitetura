@@ -9,31 +9,26 @@
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
 
-  /* Tema claro */
-  --bg: white;
-  --fg: black;
-  --card-bg: #f8f9fa;      /* fundo claro dos cards */
-  --card-border: #e5e7eb;  /* borda clara */
+  /* Tema CLARO */
+  --bg: white;          /* fundo da página */
+  --fg: black;          /* texto padrão */
+  --card-bg: #f8f9fa;   /* fundo dos cards */
+  --card-border: #e5e7eb; /* borda dos cards */
 }
 
 .dark {
-  /* Tema escuro estilo GitHub */
-  --bg: #0D1117;           /* fundo principal */
-  --fg: #C9D1D9;           /* texto */
-  --card-bg: #161B22;      /* fundo dos cards */
-  --card-border: #30363D;  /* borda escura */
+  /* Tema ESCURO (estilo GitHub) */
+  --bg: #0D1117;
+  --fg: #C9D1D9;
+  --card-bg: #161B22;
+  --card-border: #30363D;
 }
 
 /* ========================
    Base
 ======================== */
-html, body, #root {
-  height: 100%;
-}
-
-* {
-  box-sizing: border-box;
-}
+html, body, #root { height: 100%; }
+* { box-sizing: border-box; }
 
 body {
   background-color: var(--bg);
@@ -46,6 +41,21 @@ body {
 .card {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 0.75rem; /* bordas arredondadas */
+  border-radius: 0.75rem;
   padding: 1rem;
+  color: var(--fg);              /* garante texto claro no escuro */
+}
+
+/* Links dentro dos cards herdam a cor e destacam no hover */
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* Placeholder dos thumbs de projeto acompanha o tema */
+.card .aspect-video {
+  background-color: color-mix(in oklab, var(--card-border) 40%, transparent);
 }
